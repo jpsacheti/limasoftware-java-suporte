@@ -2,8 +2,11 @@ package br.edu.fema.sacheti.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @SuppressWarnings("serial")
 @Entity
@@ -18,10 +21,9 @@ public class Cliente implements Serializable{
 	private String razaoSocial;
 	private String telefone;
 	private String responsavel;
-	private String login;
-	private String senha;
 	private String dadosComplementares;
-	private boolean ativo;
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER, optional=false)
+	private Usuario usuario;
 	
 	public Integer getCodigo() {
 		return codigo;
@@ -77,26 +79,13 @@ public class Cliente implements Serializable{
 	public void setResponsavel(String responsavel) {
 		this.responsavel = responsavel;
 	}
-	public String getLogin() {
-		return login;
-	}
-	public void setLogin(String login) {
-		this.login = login;
-	}
-	public String getSenha() {
-		return senha;
-	}
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
 	
-	public boolean isAtivo() {
-		return ativo;
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-	
 	public String getDadosComplementares() {
 		return dadosComplementares;
 	}

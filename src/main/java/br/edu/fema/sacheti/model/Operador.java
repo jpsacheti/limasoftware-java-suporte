@@ -2,24 +2,23 @@ package br.edu.fema.sacheti.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.ManyToOne;
 
 @SuppressWarnings("serial")
 @Entity
-
-@SequenceGenerator(name="sequence_user")
-public class Usuario implements Serializable {
+public class Operador implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigo;
-	private String login;
-	private String senha;
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER, optional=false)
+	private Usuario usuario;
 	private String nome;
-	private boolean ativo;
 	
 	public Integer getCodigo() {
 		return codigo;
@@ -27,17 +26,11 @@ public class Usuario implements Serializable {
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
-	public String getLogin() {
-		return login;
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	public void setLogin(String login) {
-		this.login = login;
-	}
-	public String getSenha() {
-		return senha;
-	}
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	public String getNome() {
 		return nome;
@@ -45,12 +38,4 @@ public class Usuario implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public boolean isAtivo() {
-		return ativo;
-	}
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-	
-	
 }

@@ -1,11 +1,11 @@
-package br.edu.fema.sacheti.service;
+package br.edu.fema.sacheti.dao;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.edu.fema.sacheti.model.Ticket;
 
-public class TicketService {
+public class TicketDao {
 	@Inject
 	private EntityManager session;
 	
