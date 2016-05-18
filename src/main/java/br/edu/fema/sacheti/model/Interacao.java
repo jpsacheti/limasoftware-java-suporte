@@ -3,11 +3,14 @@ package br.edu.fema.sacheti.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import br.edu.fema.sacheti.jpa.LocalDatePersistenceConverter;
 
 @SuppressWarnings("serial")
 @Entity
@@ -18,7 +21,8 @@ public class Interacao implements Serializable{
 	@ManyToOne(targetEntity=Ticket.class)
 	private Ticket ticket;
 	private String descricao;
-	private LocalDate data;
+	@Convert(converter=LocalDatePersistenceConverter.class)
+	private LocalDate dataInteracao;
 	private boolean usuario;
 	private String autor;
 	
@@ -41,10 +45,10 @@ public class Interacao implements Serializable{
 		this.descricao = descricao;
 	}
 	public LocalDate getData() {
-		return data;
+		return dataInteracao;
 	}
 	public void setData(LocalDate data) {
-		this.data = data;
+		this.dataInteracao = data;
 	}
 	public String getAutor() {
 		return autor;

@@ -7,16 +7,16 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply=true)
-public class LocalDatePersistenceConverter implements AttributeConverter<LocalDate, Date> {
+public class LocalDatePersistenceConverter implements AttributeConverter<LocalDate, Date>{
 
 	@Override
-	public Date convertToDatabaseColumn(LocalDate localDate) {
-		return localDate == null ? null : Date.valueOf(localDate);
+	public Date convertToDatabaseColumn(LocalDate attribute) {
+		 return (attribute == null ? null : Date.valueOf(attribute));
 	}
 
 	@Override
-	public LocalDate convertToEntityAttribute(Date arg0) {
-		return arg0.toLocalDate();
+	public LocalDate convertToEntityAttribute(Date dbData) {
+		return dbData.toLocalDate();
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import br.edu.fema.sacheti.jpa.LocalDatePersistenceConverter;
+
 @SuppressWarnings("serial")
 @Entity
 public class Ticket implements Serializable{
@@ -23,10 +26,12 @@ public class Ticket implements Serializable{
 	
 	@ManyToOne(targetEntity=Cliente.class, optional=false)
 	private Cliente cliente;
-	private Usuario operador;
+	@ManyToOne(optional=false, targetEntity=Operador.class)
+	private Operador operador;
 	
 	@OneToMany(targetEntity=Interacao.class, orphanRemoval=true, fetch=FetchType.EAGER)
 	private List<Interacao> interacoes;
+	@Convert(converter=LocalDatePersistenceConverter.class)
 	private LocalDate criacao;
 	private boolean finalizado;
 	private String descricao;
@@ -46,10 +51,10 @@ public class Ticket implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public Usuario getOperador() {
+	public Operador getOperador() {
 		return operador;
 	}
-	public void setOperador(Usuario operador) {
+	public void setOperador(Operador operador) {
 		this.operador = operador;
 	}
 	public List<Interacao> getInteracoes() {
