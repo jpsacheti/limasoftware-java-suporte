@@ -27,6 +27,14 @@ public class LoginInterceptor {
 		this.dao = dao;
 	}
 	
+	
+	/**
+	 * @deprecated CDI eyes only
+	 */
+	public LoginInterceptor() {
+		this(null, null, null);
+	}
+	
 	@Accepts
 	public boolean accepts(ControllerMethod method){
 		return !method.containsAnnotation(Publico.class);
