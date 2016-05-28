@@ -1,12 +1,15 @@
 package br.edu.fema.sacheti.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -24,6 +27,8 @@ public class Cliente implements Serializable{
 	private String dadosComplementares;
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER, optional=false)
 	private Usuario usuario;
+	@OneToMany(mappedBy="cliente", orphanRemoval=true)
+	private List<Ticket> tickets = new ArrayList<>();
 	
 	public Integer getCodigo() {
 		return codigo;
@@ -88,6 +93,12 @@ public class Cliente implements Serializable{
 	}
 	public String getDadosComplementares() {
 		return dadosComplementares;
+	}
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 	public void setDadosComplementares(String dadosComplementares) {
 		this.dadosComplementares = dadosComplementares;

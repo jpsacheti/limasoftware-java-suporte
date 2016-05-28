@@ -23,8 +23,7 @@ public class Interacao implements Serializable{
 	private String descricao;
 	@Convert(converter=LocalDatePersistenceConverter.class)
 	private LocalDate dataInteracao;
-	private boolean usuario;
-	private String autor;
+	private Usuario usuario;
 	
 	public Integer getCodigo() {
 		return codigo;
@@ -50,17 +49,16 @@ public class Interacao implements Serializable{
 	public void setData(LocalDate data) {
 		this.dataInteracao = data;
 	}
-	public String getAutor() {
-		return autor;
+	public LocalDate getDataInteracao() {
+		return dataInteracao;
 	}
-	public void setAutor(String autor) {
-		this.autor = autor;
+	public void setDataInteracao(LocalDate dataInteracao) {
+		this.dataInteracao = dataInteracao;
 	}
-	public boolean isUsuario() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(boolean usuario) {
+	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
 }

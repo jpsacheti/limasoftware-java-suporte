@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -25,5 +26,29 @@ public class UsuarioDao {
 		CriteriaQuery<Usuario> criteria = em.getCriteriaBuilder().createQuery(Usuario.class);
 		TypedQuery<Usuario> tq = em.createQuery(criteria.select(criteria.from(Usuario.class)));
 		return tq.getResultList();
+	}
+	
+	public Usuario pesquisar(String login, String senha){
+		try{
+			return em.createQuery("select from Usuario u where u.login = :login and u.senha = :senha", Usuario.class)
+					.setParameter("login", login)
+					.setParameter("senha", senha)
+					.getSingleResult();
+		} catch(NoResultException e){
+			return null;
+		}
+	}
+	
+	public boolean existeLogin(String login){
+	    try {
+			em.createQuery("select from Usuario u where u.login = :login", Usuario.class).getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
+	}
+	
+	public void atualizar(Usuario usuario){
+		em.merge(usuario);
 	}
 }
