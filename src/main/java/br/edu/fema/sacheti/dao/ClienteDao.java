@@ -3,16 +3,31 @@ package br.edu.fema.sacheti.dao;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import org.hibernate.Session;
+
 import br.edu.fema.sacheti.model.Cliente;
-import br.edu.fema.sacheti.model.Usuario;
 
 public class ClienteDao {
 	@Inject
 	private EntityManager em;
 	
-	public Cliente getClienteFromUsuario(Usuario usuario){
-		return em.createQuery("select c from Cliente c where c.usuario = :usuario", Cliente.class)
-				.setParameter("usuario", usuario)
-				.getSingleResult();
+	public void cadastrar(Cliente cliente){
+		em.persist(cliente);
+	}
+	
+	public void alterar(Cliente cliente){
+		Session session = em.unwrap(Session.class);
+		session.update(cliente);
+	}
+	
+	public void refresh(Cliente cliente){
+		em.refresh(cliente);
+	}
+	
+	public Cliente getClienteFromLogin(String login, String senha){
+		return em.createQuery("select cli from Cliente cli where cli.usuario.login = :login and cli.usuario.senha = :senha", Cliente.class)
+				 .setParameter("login", login)
+				 .setParameter("senha", senha)
+				 .getSingleResult();
 	}
 }

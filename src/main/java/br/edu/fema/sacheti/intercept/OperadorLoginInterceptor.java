@@ -13,40 +13,38 @@ import br.edu.fema.sacheti.dao.UsuarioDao;
 import br.edu.fema.sacheti.model.Usuario;
 
 @Intercepts
-public class LoginInterceptor {
-	
-	private final UsuarioInfo usuarioInfo;
+public class OperadorLoginInterceptor {
+	private final OperadorInfo operadorInfo;
+	private final UsuarioDao usuarioDao;
 	private final Result result;
-	private final UsuarioDao dao;
-	
 	
 	@Inject
-	public LoginInterceptor(UsuarioInfo info, Result result, UsuarioDao dao) {
-		this.usuarioInfo = info;
+	public OperadorLoginInterceptor(OperadorInfo operadorInfo, UsuarioDao usuarioDao, Result result) {
+		this.operadorInfo = operadorInfo;
+		this.usuarioDao = usuarioDao;
 		this.result = result;
-		this.dao = dao;
 	}
 	
-	
-	/**
+	/**	
 	 * @deprecated CDI eyes only
 	 */
-	public LoginInterceptor() {
+	public OperadorLoginInterceptor(){
 		this(null, null, null);
 	}
 	
 	@Accepts
 	public boolean accepts(ControllerMethod method){
-		return !method.containsAnnotation(Publico.class);
+		return method.containsAnnotation(Admin.class) && !method.containsAnnotation(Publico.class);
 	}
+	
 	
 	@AroundCall
 	public void intercept(SimpleInterceptorStack sis) {
-		Usuario logado = usuarioInfo.getUsuario();
+		Usuario logado = operadorInfo.getUsuario();
 		try{
-			dao.refresh(logado);
+			usuarioDao.refresh(logado);
 		} catch(Exception e){
-			System.err.println("Erro ao validar usuário autenticado: "+e.getMessage());
+			System.err.println("Erro ao validar operador autenticado: "+e.getMessage());
 		}
 		if(logado == null){
 			result.redirectTo(HomeController.class).index();
@@ -54,5 +52,5 @@ public class LoginInterceptor {
 		}
 		sis.next();
 	}
-
+	
 }
