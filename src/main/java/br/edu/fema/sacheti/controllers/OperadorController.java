@@ -3,6 +3,7 @@ package br.edu.fema.sacheti.controllers;
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
@@ -38,12 +39,7 @@ public class OperadorController {
 	public void login(String login, String senha){
 		validator.onErrorForwardTo(HomeController.class).index();
 		operadorInfo.login(operadorDao.getOperadorFromLogin(login, senha));
-		result.redirectTo(this).ticketsAbertos();
-	}
-
-	@Admin
-	public void ticketsAbertos(){
-		//TODO: Implementar
+		result.redirectTo(TicketController.class).ticketsAbertos();
 	}
 
 }
