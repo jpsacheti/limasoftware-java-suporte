@@ -16,10 +16,6 @@ public class TicketDao {
 		session.persist(ticket);
 	}
 	
-	public void alterar(Ticket ticket){
-		session.merge(ticket);
-	}
-	
 	public void excluir(Ticket ticket){
 		session.remove(ticket);
 	}
@@ -43,5 +39,9 @@ public class TicketDao {
 	public List<Ticket> buscartTodosTicketsAtivos(){
 		return session.createQuery("select t from Ticket t where t.finalizado = false", Ticket.class)
 				.getResultList();
+	}
+
+	public Ticket pesquisarTicket(Ticket ticket) {
+		return session.find(Ticket.class, ticket.getCodigo());
 	}
 }

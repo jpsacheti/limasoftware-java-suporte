@@ -9,7 +9,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.interceptor.SimpleInterceptorStack;
 import br.edu.fema.sacheti.controllers.HomeController;
-import br.edu.fema.sacheti.dao.UsuarioDao;
+import br.edu.fema.sacheti.dao.ClienteDao;
 import br.edu.fema.sacheti.model.Usuario;
 
 @Intercepts
@@ -17,11 +17,11 @@ public class ClienteLoginInteceptor {
 	
 	private final ClienteInfo clienteInfo;
 	private final Result result;
-	private final UsuarioDao dao;
+	private final ClienteDao dao;
 	
 	
 	@Inject
-	public ClienteLoginInteceptor(ClienteInfo info, Result result, UsuarioDao dao) {
+	public ClienteLoginInteceptor(ClienteInfo info, Result result, ClienteDao dao) {
 		this.clienteInfo = info;
 		this.result = result;
 		this.dao = dao;
@@ -44,7 +44,7 @@ public class ClienteLoginInteceptor {
 	public void intercept(SimpleInterceptorStack sis) {
 		Usuario logado = clienteInfo.getUsuario();
 		try{
-			dao.refresh(logado);
+			dao.refresh(clienteInfo.getCliente());
 		} catch(Exception e){
 			System.err.println("Erro ao validar cliente autenticado: "+e.getMessage());
 		}

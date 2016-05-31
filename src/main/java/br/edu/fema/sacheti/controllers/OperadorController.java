@@ -3,12 +3,10 @@ package br.edu.fema.sacheti.controllers;
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
-import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.edu.fema.sacheti.dao.OperadorDao;
-import br.edu.fema.sacheti.intercept.Admin;
 import br.edu.fema.sacheti.intercept.OperadorInfo;
 
 @Controller

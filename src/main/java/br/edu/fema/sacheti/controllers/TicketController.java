@@ -8,6 +8,7 @@ import br.com.caelum.vraptor.Result;
 import br.edu.fema.sacheti.dao.TicketDao;
 import br.edu.fema.sacheti.intercept.Admin;
 import br.edu.fema.sacheti.intercept.OperadorInfo;
+import br.edu.fema.sacheti.model.Ticket;
 
 @Controller
 public class TicketController {
@@ -36,9 +37,15 @@ public class TicketController {
 		result.include("tickets", ticketDao.buscarTodos());
 	}
 	
+	@Post public void visualizarTicket(Ticket ticket) {
+		result.include("ticket", ticketDao.pesquisarTicket(ticket));
+	}
+	
 	@Admin
 	@Post
-	public void responderTicket(){
-		//TODO: Implementar aqui
+	public void responderTicket(Ticket ticket){
+		result.include("ticket", ticket);
+		//result.re
+		//TODO: continuar daqui
 	}
 }
