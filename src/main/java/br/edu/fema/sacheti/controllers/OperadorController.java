@@ -2,12 +2,15 @@ package br.edu.fema.sacheti.controllers;
 
 import javax.inject.Inject;
 
+import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
+import br.com.caelum.vraptor.view.Results;
 import br.edu.fema.sacheti.dao.OperadorDao;
 import br.edu.fema.sacheti.intercept.OperadorInfo;
+import br.edu.fema.sacheti.model.Operador;
 
 @Controller
 public class OperadorController {
@@ -39,5 +42,16 @@ public class OperadorController {
 		operadorInfo.login(operadorDao.getOperadorFromLogin(login, senha));
 		result.redirectTo(TicketController.class).ticketsAbertos();
 	}
+	
+	@Consumes("application/xml")
+	@Post
+	public void cadastrar(Operador operador){
+		operadorDao.cadastrar(operador);
+	}
+	
+	public void listarXml(){
+		result.use(Results.xml()).from(operadorDao.listarTodos()).serialize();
+	}
+	
 
 }

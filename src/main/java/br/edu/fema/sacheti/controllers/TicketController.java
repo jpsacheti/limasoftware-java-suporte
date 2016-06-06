@@ -1,5 +1,7 @@
 package br.edu.fema.sacheti.controllers;
 
+import java.time.LocalDate;
+
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
@@ -8,6 +10,7 @@ import br.com.caelum.vraptor.Result;
 import br.edu.fema.sacheti.dao.TicketDao;
 import br.edu.fema.sacheti.intercept.Admin;
 import br.edu.fema.sacheti.intercept.OperadorInfo;
+import br.edu.fema.sacheti.model.Interacao;
 import br.edu.fema.sacheti.model.Ticket;
 
 @Controller
@@ -44,8 +47,17 @@ public class TicketController {
 	@Admin
 	@Post
 	public void responderTicket(Ticket ticket){
+		Interacao interacao = new Interacao();
+		interacao.setTicket(ticket);
+		interacao.setUsuario(operadorInfo.getUsuario());
+		interacao.setDataInteracao(LocalDate.now());
 		result.include("ticket", ticket);
-		//result.re
-		//TODO: continuar daqui
+		result.include("interacao", interacao);
+	}
+	
+	public void finalizarResposta(Ticket ticket, Interacao interacao){
+		ticket.getInteracoes().add(interacao);
+		ticketDao.atualizar(ticket);
+		result.redirectTo(this).ticketsAbertos();
 	}
 }

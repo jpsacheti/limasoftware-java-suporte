@@ -8,7 +8,7 @@ import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.interceptor.SimpleInterceptorStack;
-import br.edu.fema.sacheti.controllers.HomeController;
+import br.com.caelum.vraptor.view.Results;
 import br.edu.fema.sacheti.dao.ClienteDao;
 import br.edu.fema.sacheti.model.Usuario;
 
@@ -49,7 +49,7 @@ public class ClienteLoginInteceptor {
 			System.err.println("Erro ao validar cliente autenticado: "+e.getMessage());
 		}
 		if(logado == null){
-			result.redirectTo(HomeController.class).index();
+			result.use(Results.status()).forbidden("Acesso restrito a usuários logados");
 			return;
 		}
 		sis.next();

@@ -1,5 +1,7 @@
 package br.edu.fema.sacheti.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -20,5 +22,13 @@ public class OperadorDao {
 				.setParameter("login", login)
 				.setParameter("senha", senha)
 				.getSingleResult();
+	}
+
+	public void cadastrar(Operador operador) {
+		em.persist(operador);
+	}
+
+	public List<Operador> listarTodos() {
+		return em.createQuery("select op from Operador op", Operador.class).getResultList();
 	}
 }

@@ -1,5 +1,7 @@
 package br.edu.fema.sacheti.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -29,5 +31,9 @@ public class ClienteDao {
 				 .setParameter("login", login)
 				 .setParameter("senha", senha)
 				 .getSingleResult();
+	}
+
+	public List<Cliente> listarTodos() {
+		return em.createQuery("select cliente from Cliente cliente", Cliente.class).getResultList();
 	}
 }

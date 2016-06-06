@@ -2,15 +2,18 @@ package br.edu.fema.sacheti.controllers;
 
 import javax.inject.Inject;
 
+import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
+import br.com.caelum.vraptor.view.Results;
 import br.edu.fema.sacheti.dao.ClienteDao;
 import br.edu.fema.sacheti.dao.TicketDao;
 import br.edu.fema.sacheti.intercept.ClienteInfo;
+import br.edu.fema.sacheti.model.Cliente;
 
 @Controller
 public class ClienteController {
@@ -52,5 +55,15 @@ public class ClienteController {
 	public void login(String login, String senha) {
 		validator.onErrorForwardTo(HomeController.class).index();
 		clienteInfo.login(clienteDao.getClienteFromLogin(login, senha));
+	}
+	
+	@Consumes("application/xml")
+	@Path("/clientes/cadastrar")
+	public void cadastrarCliente(Cliente cliente){
+		clienteDao.cadastrar(cliente);
+	}
+	
+	public void listarXml(){
+		result.use(Results.xml()).from(clienteDao.listarTodos()).serialize();
 	}
 }
