@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.edu.fema.sacheti.jpa.LocalDatePersistenceConverter;
 
@@ -18,11 +21,14 @@ public class Interacao implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigo;
+	@NotNull
 	@ManyToOne(targetEntity=Ticket.class)
 	private Ticket ticket;
+	@NotEmpty
 	private String descricao;
 	@Convert(converter=LocalDatePersistenceConverter.class)
 	private LocalDate dataInteracao;
+	@NotNull
 	private Usuario usuario;
 	
 	public Integer getCodigo() {

@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import br.edu.fema.sacheti.jpa.LocalDatePersistenceConverter;
 
 @SuppressWarnings("serial")
@@ -34,8 +36,8 @@ public class Ticket implements Serializable{
 	@Convert(converter=LocalDatePersistenceConverter.class)
 	private LocalDate criacao;
 	private boolean finalizado;
+	@NotEmpty
 	private String descricao;
-	
 	@Enumerated(EnumType.ORDINAL)
 	private Prioridade prioridade;
 	
