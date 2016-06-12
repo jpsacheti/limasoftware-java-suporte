@@ -44,7 +44,8 @@ public class TicketController {
 		result.include("tickets", ticketDao.buscarTodos());
 	}
 	
-	@Post public void visualizarTicket(Ticket ticket) {
+	@Post 
+	public void visualizarTicket(Ticket ticket) {
 		result.include("ticket", ticketDao.pesquisarTicket(ticket));
 	}
 	

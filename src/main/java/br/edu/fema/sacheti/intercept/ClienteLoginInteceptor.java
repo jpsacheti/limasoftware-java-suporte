@@ -46,7 +46,8 @@ public class ClienteLoginInteceptor {
 		try{
 			dao.refresh(clienteInfo.getCliente());
 		} catch(Exception e){
-			System.err.println("Erro ao validar cliente autenticado: "+e.getMessage());
+			System.err.println("Erro ao validar cliente autenticado: ");
+			e.printStackTrace();
 		}
 		if(logado == null){
 			result.use(Results.status()).forbidden("Acesso restrito a usuários logados");

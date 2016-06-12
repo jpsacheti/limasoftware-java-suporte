@@ -36,4 +36,9 @@ public class ClienteDao {
 	public List<Cliente> listarTodos() {
 		return em.createQuery("select cliente from Cliente cliente", Cliente.class).getResultList();
 	}
+
+	public void flush() {
+		em.flush();
+		
+	}
 }

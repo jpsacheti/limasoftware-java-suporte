@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.view.Results;
 import br.edu.fema.sacheti.dao.ClienteDao;
 import br.edu.fema.sacheti.dao.TicketDao;
 import br.edu.fema.sacheti.intercept.ClienteInfo;
+import br.edu.fema.sacheti.intercept.Publico;
 import br.edu.fema.sacheti.model.Cliente;
 
 @Controller
@@ -40,7 +41,7 @@ public class ClienteController {
 		this(null, null, null, null, null);
 	}
 
-	@Get("/")
+	@Get
 	public void home() {
 		validator.onErrorRedirectTo(HomeController.class).index();
 	}
@@ -52,6 +53,7 @@ public class ClienteController {
 	}
 
 	@Post
+	@Publico
 	public void login(String login, String senha) {
 		validator.onErrorForwardTo(HomeController.class).index();
 		clienteInfo.login(clienteDao.getClienteFromLogin(login, senha));
