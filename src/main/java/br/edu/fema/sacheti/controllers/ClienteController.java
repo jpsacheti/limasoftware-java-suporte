@@ -57,6 +57,7 @@ public class ClienteController {
 	public void login(String login, String senha) {
 		validator.onErrorForwardTo(HomeController.class).index();
 		clienteInfo.login(clienteDao.getClienteFromLogin(login, senha));
+		result.forwardTo(this).ticketsAbertos();
 	}
 	
 	@Consumes("application/xml")

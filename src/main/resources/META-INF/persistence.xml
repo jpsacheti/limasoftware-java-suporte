@@ -12,7 +12,7 @@
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/postgres"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/sacheti"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
     </properties>
   </persistence-unit>

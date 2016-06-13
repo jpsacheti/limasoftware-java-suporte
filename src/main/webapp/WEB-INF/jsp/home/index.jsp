@@ -10,10 +10,9 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row">
-			<h3 class="col-md-offset-4 col-md-4">Login de usuário - ${teste}</h3>
-		</div>
-		<form action="${linkTo[ClienteController].login}" class="col-md-offset-4 col-md-4" method="post">
+		<form action="${linkTo[ClienteController].login}"
+			class="col-md-offset-4 col-md-4" method="post">
+			<h3 class="center-block" align="center">Login de usuário</h3>
 			<div class="form-group">
 				<input type="text" class="form-control" id="login" name="login"
 					placeholder="Login" />
@@ -22,9 +21,11 @@
 				<input type="password" class="form-control" id="senha" name="senha"
 					placeholder="Senha" />
 			</div>
-			<div class="col-md-offset-6 col-md-6">
-			<button class="btn btn-primary btn-large" type="submit" id="submit">Login</button>
-			</div>
+
+			<button class="btn btn-primary btn-large center-block"
+				style="margin-top: 20px" type="submit" id="submit">
+				<i class="fa fa-sign-in" aria-hidden="true"></i> Login
+			</button>
 		</form>
 	</div>
 </body>
