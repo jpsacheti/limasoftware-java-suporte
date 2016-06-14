@@ -5,8 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Forbidden</title>
+<%@ include file="/header.jsp" %>
 </head>
-<body>
-	Você não pode acessar aqui!
+<body class="container">
+	<h1 style="font-size: 6em;"><span class="glyphicon glyphicon-remove-circle"></span> 403 </h1>
+	<br>
+	<h1>Você não pode acessar aqui...</h1>
 </body>
 </html>

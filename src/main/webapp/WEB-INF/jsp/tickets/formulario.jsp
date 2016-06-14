@@ -8,11 +8,18 @@
 </head>
 <body>
 	<div class="container">
-		<form>
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder=""/>
-			</div>
-		</form>
+		<div class="center-block">
+			<h3>Cadastro de Ticket</h3>
+			<form method="post">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Descricao"
+						name="ticket.descricao" />
+				</div>
+				<button class="btn btn-success" type="submit">
+					<i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+				</button>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

@@ -28,7 +28,7 @@ public class Ticket implements Serializable{
 	
 	@ManyToOne(targetEntity=Cliente.class, optional=false)
 	private Cliente cliente;
-	@ManyToOne(optional=false, targetEntity=Operador.class)
+	@ManyToOne(targetEntity=Operador.class)
 	private Operador operador;
 	
 	@OneToMany(targetEntity=Interacao.class, orphanRemoval=true, fetch=FetchType.EAGER)

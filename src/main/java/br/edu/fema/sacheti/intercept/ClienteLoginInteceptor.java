@@ -44,13 +44,15 @@ public class ClienteLoginInteceptor {
 	public void intercept(SimpleInterceptorStack sis) {
 		Usuario logado = clienteInfo.getUsuario();
 		try{
+			if(logado == null){
+				result.use(Results.status()).forbidden("Acesso restrito a usuários logados");
+				return;
+			}
 			dao.refresh(clienteInfo.getCliente());
 		} catch(Exception e){
 			System.err.println("Erro ao validar cliente autenticado: ");
-			e.printStackTrace();
-		}
-		if(logado == null){
 			result.use(Results.status()).forbidden("Acesso restrito a usuários logados");
+			e.printStackTrace();
 			return;
 		}
 		sis.next();

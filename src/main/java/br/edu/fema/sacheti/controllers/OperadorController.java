@@ -10,6 +10,7 @@ import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
 import br.edu.fema.sacheti.dao.OperadorDao;
 import br.edu.fema.sacheti.intercept.OperadorInfo;
+import br.edu.fema.sacheti.intercept.Publico;
 import br.edu.fema.sacheti.model.Operador;
 
 @Controller
@@ -40,13 +41,16 @@ public class OperadorController {
 	public void login(String login, String senha){
 		validator.onErrorForwardTo(HomeController.class).index();
 		operadorInfo.login(operadorDao.getOperadorFromLogin(login, senha));
-		result.redirectTo(TicketController.class).ticketsAbertos();
+		result.redirectTo(TicketController.class).ticketsResolver();
 	}
 	
 	@Consumes("application/xml")
 	@Post
+	@Publico
 	public void cadastrar(Operador operador){
 		operadorDao.cadastrar(operador);
+		result.use(Results.status()).ok();
+		validator.onErrorSendBadRequest();
 	}
 	
 	public void listarXml(){

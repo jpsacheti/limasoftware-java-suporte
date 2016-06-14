@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
@@ -21,7 +20,6 @@ public class ClienteController {
 	private final Validator validator;
 	private final Result result;
 	private final ClienteInfo clienteInfo;
-	private final TicketDao ticketDao;
 	private final ClienteDao clienteDao;
 
 	@Inject
@@ -30,7 +28,6 @@ public class ClienteController {
 		this.validator = validator;
 		this.result = result;
 		this.clienteInfo = clienteInfo;
-		this.ticketDao = ticketDao;
 		this.clienteDao = clienteDao;
 	}
 
@@ -46,24 +43,21 @@ public class ClienteController {
 		validator.onErrorRedirectTo(HomeController.class).index();
 	}
 
-	@Path("/tickets/abertos")
-	@Post
-	public void ticketsAbertos() {
-		result.include(ticketDao.buscarTicketsAbertosCliente(clienteInfo.getCliente()));
-	}
-
 	@Post
 	@Publico
 	public void login(String login, String senha) {
 		validator.onErrorForwardTo(HomeController.class).index();
 		clienteInfo.login(clienteDao.getClienteFromLogin(login, senha));
-		result.forwardTo(this).ticketsAbertos();
+		result.forwardTo(TicketController.class).ticketsAbertosCliente();
 	}
 	
 	@Consumes("application/xml")
-	@Path("/clientes/cadastrar")
+	@Post("/cliente/cadastrar")
+	@Publico
 	public void cadastrarCliente(Cliente cliente){
 		clienteDao.cadastrar(cliente);
+		result.use(Results.status()).ok();
+		validator.onErrorSendBadRequest();
 	}
 	
 	public void listarXml(){
