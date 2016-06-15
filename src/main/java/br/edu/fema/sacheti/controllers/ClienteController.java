@@ -7,6 +7,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.environment.Property;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
 import br.edu.fema.sacheti.dao.ClienteDao;
@@ -21,10 +22,12 @@ public class ClienteController {
 	private final Result result;
 	private final ClienteInfo clienteInfo;
 	private final ClienteDao clienteDao;
+	@Inject
+	@Property("chave.acesso")
+	private String token;
 
 	@Inject
-	public ClienteController(Validator validator, Result result, ClienteInfo clienteInfo, TicketDao ticketDao,
-			ClienteDao clienteDao) {
+	public ClienteController(Validator validator, Result result, ClienteInfo clienteInfo, TicketDao ticketDao, ClienteDao clienteDao) {
 		this.validator = validator;
 		this.result = result;
 		this.clienteInfo = clienteInfo;
@@ -50,17 +53,21 @@ public class ClienteController {
 		clienteInfo.login(clienteDao.getClienteFromLogin(login, senha));
 		result.forwardTo(TicketController.class).ticketsAbertosCliente();
 	}
-	
-	@Consumes("application/xml")
+
+	@Consumes({"application/xml", "application/json"})
 	@Post("/cliente/cadastrar")
 	@Publico
-	public void cadastrarCliente(Cliente cliente){
-		clienteDao.cadastrar(cliente);
-		result.use(Results.status()).ok();
+	public void cadastrarCliente(Cliente cliente, String tokenInformado) {
+		if (token.equals(tokenInformado)) {
+			clienteDao.cadastrar(cliente);
+			result.use(Results.status()).ok();
+		} else{
+			result.use(Results.status()).forbidden("Token informado incorretamente");
+		}
 		validator.onErrorSendBadRequest();
 	}
-	
-	public void listarXml(){
+
+	public void listarXml() {
 		result.use(Results.xml()).from(clienteDao.listarTodos()).serialize();
 	}
 }

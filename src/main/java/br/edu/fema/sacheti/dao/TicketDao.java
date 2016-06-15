@@ -44,6 +44,10 @@ public class TicketDao {
 	public Ticket pesquisarTicket(Ticket ticket) {
 		return session.find(Ticket.class, ticket.getCodigo());
 	}
+	
+	public Ticket pesquisarTicket(Integer codigo){
+		return session.find(Ticket.class, codigo);
+	}
 
 	public void atualizar(Ticket ticket) {
 		session.merge(ticket);

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
@@ -14,6 +15,7 @@ import br.edu.fema.sacheti.dao.TicketDao;
 import br.edu.fema.sacheti.intercept.Admin;
 import br.edu.fema.sacheti.intercept.ClienteInfo;
 import br.edu.fema.sacheti.intercept.OperadorInfo;
+import br.edu.fema.sacheti.intercept.Publico;
 import br.edu.fema.sacheti.model.Interacao;
 import br.edu.fema.sacheti.model.Ticket;
 
@@ -48,14 +50,21 @@ public class TicketController {
 		result.include("tickets", ticketDao.buscarTodos());
 	}
 	
-	@Path("/tickets/abertos")
+	@Path("/ticket/abertos")
 	@Post
 	public void ticketsAbertosCliente() {
-		result.include(ticketDao.buscarTicketsAbertosCliente(clienteInfo.getCliente()));
+		result.include("ticketList",ticketDao.buscarTicketsAbertosCliente(clienteInfo.getCliente()));
+		result.of(this).listar();
+	}
+	
+	@Path("/ticket/todos")
+	public void todosTicketsCliente(){
+		result.include("ticketList", ticketDao.buscarTicketsCliente(clienteInfo.getCliente()));
+		result.of(this).ticketsAbertosCliente();
 	}
 
 	
-	@Post 
+	@Post("/ticket/visualizar/{ticket.id}") 
 	public void visualizarTicket(Ticket ticket) {
 		result.include("ticket", ticketDao.pesquisarTicket(ticket));
 	}
@@ -77,4 +86,21 @@ public class TicketController {
 		ticketDao.atualizar(ticket);
 		result.redirectTo(this).ticketsResolver();
 	}
+	
+	@Publico
+	public void listar(){
+		
+	}
+	
+	public void formulario(boolean inclusao){
+		result.include(inclusao);
+	}
+	
+	@Delete("/ticket/remover/{codigo}")
+	public void remover(Integer codigo){
+		Ticket ticket = ticketDao.pesquisarTicket(codigo);
+		ticketDao.excluir(ticket);
+		result.nothing();
+	}
+
 }

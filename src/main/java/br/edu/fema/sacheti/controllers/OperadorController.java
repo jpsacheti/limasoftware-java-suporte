@@ -6,6 +6,7 @@ import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.environment.Property;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
 import br.edu.fema.sacheti.dao.OperadorDao;
@@ -20,6 +21,8 @@ public class OperadorController {
 	private final OperadorInfo operadorInfo;
 	private final Validator validator;
 	private final Result result;
+	@Inject @Property("chave.acesso")
+	private String token;
 	 
 	/**
 	 * @Deprecated CDI eyes only 
@@ -44,12 +47,16 @@ public class OperadorController {
 		result.redirectTo(TicketController.class).ticketsResolver();
 	}
 	
-	@Consumes("application/xml")
+	@Consumes({"application/xml", "application/json"})
 	@Post
 	@Publico
-	public void cadastrar(Operador operador){
-		operadorDao.cadastrar(operador);
-		result.use(Results.status()).ok();
+	public void cadastrar(Operador operador, String tokenInformado){
+		if (token.equals(tokenInformado)) {
+			operadorDao.cadastrar(operador);
+			result.use(Results.status()).ok();
+		} else{
+			result.use(Results.status()).forbidden("Você não pode acessar aqui!");
+		}
 		validator.onErrorSendBadRequest();
 	}
 	
