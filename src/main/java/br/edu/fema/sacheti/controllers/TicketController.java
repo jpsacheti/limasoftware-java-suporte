@@ -60,7 +60,7 @@ public class TicketController {
 	@Path("/ticket/todos")
 	public void todosTicketsCliente(){
 		result.include("ticketList", ticketDao.buscarTicketsCliente(clienteInfo.getCliente()));
-		result.of(this).ticketsAbertosCliente();
+		result.of(this).listar();
 	}
 
 	
@@ -94,6 +94,7 @@ public class TicketController {
 	
 	public void formulario(boolean inclusao){
 		result.include(inclusao);
+		
 	}
 	
 	@Delete("/ticket/remover/{codigo}")

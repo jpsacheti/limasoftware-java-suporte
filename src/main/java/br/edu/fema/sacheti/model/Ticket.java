@@ -2,6 +2,7 @@ package br.edu.fema.sacheti.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Convert;
@@ -32,7 +33,7 @@ public class Ticket implements Serializable{
 	private Operador operador;
 	
 	@OneToMany(targetEntity=Interacao.class, orphanRemoval=true, fetch=FetchType.EAGER)
-	private List<Interacao> interacoes;
+	private List<Interacao> interacoes = new ArrayList<>();
 	@Convert(converter=LocalDatePersistenceConverter.class)
 	private LocalDate criacao;
 	private boolean finalizado;
