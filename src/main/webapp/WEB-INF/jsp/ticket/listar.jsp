@@ -60,7 +60,7 @@
 
 			</c:otherwise>
 		</c:choose>
-		
+		<div class="center-block"><a href="${linkTo[TicketController].cadastrar}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Adicionar</a></div>
 	</div>
 </body>
 </html>

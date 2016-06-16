@@ -51,7 +51,7 @@ public class ClienteController {
 	public void login(String login, String senha) {
 		validator.onErrorForwardTo(HomeController.class).index();
 		clienteInfo.login(clienteDao.getClienteFromLogin(login, senha));
-		result.forwardTo(TicketController.class).ticketsAbertosCliente();
+		result.redirectTo(TicketController.class).ticketsAbertosCliente();
 	}
 
 	@Consumes({"application/xml", "application/json"})

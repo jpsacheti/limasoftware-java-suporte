@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Delete;
+import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
@@ -64,7 +65,7 @@ public class TicketController {
 	}
 
 	
-	@Post("/ticket/visualizar/{ticket.id}") 
+	@Post("/ticket/visualizar/{ticket.codigo}") 
 	public void visualizarTicket(Ticket ticket) {
 		result.include("ticket", ticketDao.pesquisarTicket(ticket));
 	}
@@ -80,6 +81,7 @@ public class TicketController {
 		result.include("interacao", interacao);
 	}
 	
+	@Get
 	public void finalizarResposta(Ticket ticket, @Valid Interacao interacao){
 		validator.onErrorRedirectTo(this).finalizarResposta(ticket, interacao);
 		ticket.getInteracoes().add(interacao);
@@ -103,5 +105,9 @@ public class TicketController {
 		ticketDao.excluir(ticket);
 		result.nothing();
 	}
-
+	
+	@Get
+	public void cadastrar(){
+		result.forwardTo(this).formulario(true);
+	}
 }
