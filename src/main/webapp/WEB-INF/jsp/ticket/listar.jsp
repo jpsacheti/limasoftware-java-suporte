@@ -15,7 +15,7 @@
 			$.ajax({
 				url: $(this).attr("href"),
 				type: 'DELETE'
-			}).done(function(data, jqXHR, textStatus)){
+			}).done(function(data, jqXHR, textStatus){
 				tag.fadeOut();
 			}).fail(function(jqXHR, textStatus, err){
 				alert('Falha ao excluir! '+err);

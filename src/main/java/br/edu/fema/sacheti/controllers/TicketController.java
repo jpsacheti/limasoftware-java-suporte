@@ -95,8 +95,22 @@ public class TicketController {
 	}
 	
 	public void formulario(boolean inclusao){
-		result.include(inclusao);
-		
+		result.include(inclusao);	
+	}
+	
+	@Get("/ticket/interacao")
+	public void cadastrarInteracao(Ticket ticket){
+		result.include(ticket);
+	}
+	
+	@Post
+	public void incluirInteracao(Ticket ticket, Interacao interacao){
+		interacao.setTicket(ticket);
+		interacao.setUsuario(clienteInfo.getUsuario());
+		interacao.setDataInteracao(LocalDate.now());
+		ticket.getInteracoes().add(interacao);
+		ticketDao.atualizar(ticket);
+		result.redirectTo(this).ticketsAbertosCliente();
 	}
 	
 	@Delete("/ticket/remover/{codigo}")
@@ -109,5 +123,13 @@ public class TicketController {
 	@Get
 	public void cadastrar(){
 		result.forwardTo(this).formulario(true);
+	}
+	
+	@Get
+	public void finalizar(Ticket ticket){
+		ticket.setFinalizado(true);
+		ticketDao.atualizar(ticket);
+		result.include("mensagem", "Ticket finalizado com sucesso!");
+		result.redirectTo(this).visualizarTicket(ticket);
 	}
 }

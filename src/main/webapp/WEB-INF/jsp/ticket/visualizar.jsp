@@ -11,6 +11,9 @@
 </head>
 <body>
 	<div class="container">
+		<c:if test="${not empty mensagem }">
+			<p class="text-center">${mensagem}</p>
+		</c:if>
 		<div class="panel panel-default">
 			<div class="panel-title">Ticket</div>
 			<div class="panel-body">
@@ -29,10 +32,22 @@
 						<hr>
 						<ul>
 							<li><b>Usuario: </b>${interacao.usuario.nome}</li>
-							<li><b>Data: </b> <time:format value="${interacao.dataInteracao}" pattern="dd/MM/yyyy" /></li>
+							<li><b>Data: </b> <time:format
+									value="${interacao.dataInteracao}" pattern="dd/MM/yyyy" /></li>
 							<li><b>Descrição: </b> ${interacao.descricao}</li>
 						</ul>
 					</c:forEach>
+				</c:if>
+			</div>
+			<div class="panel-footer">
+				<a class="btn btn-primary" style="margin-right: 5px;"
+					href="${linkTo[TicketController].ticketsAbertosCliente}"> <span
+					class="glyphicon glyphicon-chevron-left"></span> Voltar
+				</a>
+				<c:if test="${not ticket.finalizado }">
+					<a href="${linkTo[TicketController].finalizar(ticket)}"
+						class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>
+						Finalizar</a>
 				</c:if>
 			</div>
 		</div>
