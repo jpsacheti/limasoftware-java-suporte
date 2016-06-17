@@ -10,6 +10,15 @@
 </head>
 <body>
 	<div class="container">
+		<c:if test="${not empty mensagem}">
+			<div class="alert alert-danger alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>${mensagem}</strong>
+			</div>
+		</c:if>
 		<form action="${linkTo[ClienteController].login}"
 			class="col-md-offset-4 col-md-4" method="post">
 			<h3 class="center-block" align="center">Login de usuário</h3>

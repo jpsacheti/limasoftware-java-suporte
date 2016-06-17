@@ -10,6 +10,6 @@
 <body class="container">
 	<h1 style="font-size: 6em;" class="text-center"><span class="glyphicon glyphicon-remove-circle"></span> 403 - Acesso negado</h1>
 	<br>
-	<img src="assets/403.png" alt="Você não é a dona daqui" class="img-rounded center-block" />
+	<img src="<c:url value='/assets/erro403.png'/>" alt="Você não é a dona daqui" class="img-rounded center-block" />
 </body>
 </html>

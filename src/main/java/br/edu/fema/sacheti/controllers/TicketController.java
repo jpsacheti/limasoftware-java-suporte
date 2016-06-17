@@ -6,11 +6,11 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import br.com.caelum.vraptor.Controller;
-import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.edu.fema.sacheti.dao.TicketDao;
 import br.edu.fema.sacheti.intercept.Admin;
@@ -46,27 +46,28 @@ public class TicketController {
 	}
 
 	@Admin
-	@Post
+	@Get
 	public void ticketsResolver() {
 		result.include("tickets", ticketDao.buscarTodos());
 	}
 	
 	@Path("/ticket/abertos")
-	@Post
+	@Get
 	public void ticketsAbertosCliente() {
 		result.include("ticketList",ticketDao.buscarTicketsAbertosCliente(clienteInfo.getCliente()));
 		result.of(this).listar();
 	}
 	
 	@Path("/ticket/todos")
+	@Get
 	public void todosTicketsCliente(){
 		result.include("ticketList", ticketDao.buscarTicketsCliente(clienteInfo.getCliente()));
 		result.of(this).listar();
 	}
 
 	
-	@Post("/ticket/visualizar/{ticket.codigo}") 
-	public void visualizarTicket(Ticket ticket) {
+	@Get("/ticket/visualizar/{codigo}") 
+	public void visualizarTicket(Integer ticket) {
 		result.include("ticket", ticketDao.pesquisarTicket(ticket));
 	}
 	
@@ -86,7 +87,7 @@ public class TicketController {
 		validator.onErrorRedirectTo(this).finalizarResposta(ticket, interacao);
 		ticket.getInteracoes().add(interacao);
 		ticketDao.atualizar(ticket);
-		result.redirectTo(this).ticketsResolver();
+		result.forwardTo(this).ticketsResolver();
 	}
 	
 	@Publico
@@ -103,7 +104,7 @@ public class TicketController {
 		result.include(ticket);
 	}
 	
-	@Post
+	@Get
 	public void incluirInteracao(Ticket ticket, Interacao interacao){
 		interacao.setTicket(ticket);
 		interacao.setUsuario(clienteInfo.getUsuario());
@@ -113,16 +114,17 @@ public class TicketController {
 		result.redirectTo(this).ticketsAbertosCliente();
 	}
 	
-	@Delete("/ticket/remover/{codigo}")
+	@Get("/ticket/remover/{codigo}")
 	public void remover(Integer codigo){
 		Ticket ticket = ticketDao.pesquisarTicket(codigo);
 		ticketDao.excluir(ticket);
-		result.nothing();
+		result.include(new SimpleMessage("mensagem", "Ticket excluido com sucesso"));
+		result.forwardTo(this).ticketsAbertosCliente();
 	}
 	
 	@Get
 	public void cadastrar(){
-		result.forwardTo(this).formulario(true);
+		result.redirectTo(this).formulario(true);
 	}
 	
 	@Get
@@ -130,6 +132,16 @@ public class TicketController {
 		ticket.setFinalizado(true);
 		ticketDao.atualizar(ticket);
 		result.include("mensagem", "Ticket finalizado com sucesso!");
-		result.redirectTo(this).visualizarTicket(ticket);
+		result.forwardTo(this).visualizarTicket(ticket.getCodigo());
+	}
+	
+	@Post
+	public void gravar(Ticket ticket){
+		ticket.setCliente(clienteInfo.getCliente());
+		ticket.setFinalizado(false);
+		ticket.setCriacao(LocalDate.now());
+		ticketDao.cadastrar(ticket);
+		result.include("mensagem", "Ticket cadastrado com sucesso!");
+		result.forwardTo(this).ticketsAbertosCliente();
 	}
 }

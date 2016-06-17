@@ -10,6 +10,6 @@
 <body class="container">
 	<h1 style="font-size: 6em;" class="text-center"><span class="glyphicon glyphicon-remove-circle"></span> 500 - Erro interno do servidor </h1>
 	<br>
-	<img src="assets/500.png" alt="Munique eu to passando mal" class="img-rounded center-block" />
+	<img src="<c:url value='/assets/erro500.png'/>" alt="Munique eu to passando mal" class="img-rounded center-block" />
 </body>
 </html>

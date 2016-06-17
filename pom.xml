@@ -141,6 +141,8 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<compilerArgument>-parameters</compilerArgument>
+					<debug>true</debug>
+					<debuglevel>lines, var, sources</debuglevel>
 					<testCompilerArgument>-parameters</testCompilerArgument>
 				</configuration>
 			</plugin>

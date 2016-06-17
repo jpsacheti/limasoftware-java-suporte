@@ -5,16 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Suporte Online</title>
-<%@include file="/header.jsp" %>
+<%@include file="/header.jsp"%>
 </head>
 <body>
 	<div class="container">
 		<div class="center-block">
 			<h3>Cadastro de Ticket</h3>
-			<form method="post">
+			<form method="post" action="${linkTo[TicketController].gravar}">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Descricao"
-						name="ticket.descricao" />
+					<textarea rows="30" cols="30" class="form-control"
+						placeholder="Descricao" name="ticket.descricao"></textarea>
 				</div>
 				<button class="btn btn-success" type="submit">
 					<i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar

@@ -8,6 +8,7 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.environment.Property;
+import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
 import br.edu.fema.sacheti.dao.ClienteDao;
@@ -49,9 +50,15 @@ public class ClienteController {
 	@Post
 	@Publico
 	public void login(String login, String senha) {
-		validator.onErrorForwardTo(HomeController.class).index();
-		clienteInfo.login(clienteDao.getClienteFromLogin(login, senha));
-		result.redirectTo(TicketController.class).ticketsAbertosCliente();
+		validator.onErrorUsePageOf(HomeController.class).index();
+		Cliente cliente = clienteDao.getClienteFromLogin(login, senha);
+		if(cliente  == null){
+			validator.add(new SimpleMessage("mensagem", "Login inválido!"));
+			result.forwardTo(HomeController.class).index();
+			return;
+		}
+		clienteInfo.login(cliente);
+		result.forwardTo(TicketController.class).ticketsAbertosCliente();
 	}
 
 	@Consumes({"application/xml", "application/json"})
