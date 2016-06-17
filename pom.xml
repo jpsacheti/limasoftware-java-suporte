@@ -142,7 +142,6 @@
 					<target>1.8</target>
 					<compilerArgument>-parameters</compilerArgument>
 					<debug>true</debug>
-					<debuglevel>lines, vars, sources</debuglevel>
 					<testCompilerArgument>-parameters</testCompilerArgument>
 				</configuration>
 			</plugin>
