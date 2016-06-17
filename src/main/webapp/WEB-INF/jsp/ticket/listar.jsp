@@ -19,12 +19,12 @@
 			<c:otherwise>
 				<c:if test="${not empty mensagem}">
 					<div class="alert alert-success alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<strong>${mensagem}</strong>
-				</div>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<strong>${mensagem}</strong>
+					</div>
 				</c:if>
 				<table class="table table-hover" id="tickets">
 					<tr>
@@ -34,6 +34,7 @@
 						<th>Finalizado</th>
 						<th>Visualizar</th>
 						<th>Excluir</th>
+						<th>Finalizer</th>
 					</tr>
 					<c:forEach items="${ticketList}" var="ticket">
 						<tr class="ticket">
@@ -42,11 +43,16 @@
 									pattern="dd/MM/yyyy" /></td>
 							<td>${empty ticket.operador ? 'Não designado' : ticket.operador.nome }</td>
 							<td>${ticket.finalizado ? 'Sim' : 'Não'}</td>
-							<td><a href="${linkTo[TicketController].visualizarTicket(ticket.codigo)}"
-								class="label"><span class="glyphicon glyphicon-search" style="color: black;"></span></a>
-							</td>
+							<td><a
+								href="${linkTo[TicketController].visualizar(ticket.codigo)}"
+								class="label"><span class="glyphicon glyphicon-search"
+									style="color: black;"></span></a></td>
 							<td><a class="remove"
-								href="${linkTo[TicketController].remover(ticket.codigo)}"><span class="glyphicon glyphicon-trash" style="color:black;"></span></a></td>
+								href="${linkTo[TicketController].remover(ticket.codigo)}"><span
+									class="glyphicon glyphicon-trash" style="color: black;"></span></a></td>
+							<td><a href="${linkTo[TicketController].finalizar(ticket.codigo)}"><span
+									class="glyphicon glyphicon-ok"></span></a>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>

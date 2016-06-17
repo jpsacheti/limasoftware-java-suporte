@@ -15,7 +15,7 @@
 			<p class="text-center">${mensagem}</p>
 		</c:if>
 		<div class="panel panel-default">
-			<div class="panel-title">Ticket</div>
+			<div class="panel-title"><h4>Ticket</h4></div>
 			<div class="panel-body">
 				<ul class="list-unstyled">
 					<li><b>Data de Criação: </b>

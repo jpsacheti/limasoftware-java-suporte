@@ -67,8 +67,8 @@ public class TicketController {
 
 	
 	@Get("/ticket/visualizar/{codigo}") 
-	public void visualizarTicket(Integer ticket) {
-		result.include("ticket", ticketDao.pesquisarTicket(ticket));
+	public void visualizar(Integer codigo) {
+		result.include("ticket", ticketDao.pesquisarTicket(codigo));
 	}
 	
 	@Admin
@@ -127,12 +127,13 @@ public class TicketController {
 		result.redirectTo(this).formulario(true);
 	}
 	
-	@Get
-	public void finalizar(Ticket ticket){
-		ticket.setFinalizado(true);
-		ticketDao.atualizar(ticket);
+	@Get("/ticket/finalizar/{codigo}")
+	public void finalizar(Integer codigo){
+		Ticket ticketEncontrado = ticketDao.pesquisarTicket(codigo);
+		ticketEncontrado.setFinalizado(true);
+		ticketDao.atualizar(ticketEncontrado);
 		result.include("mensagem", "Ticket finalizado com sucesso!");
-		result.forwardTo(this).visualizarTicket(ticket.getCodigo());
+		result.forwardTo(this).visualizar(ticketEncontrado.getCodigo());
 	}
 	
 	@Post
