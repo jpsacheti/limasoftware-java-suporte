@@ -131,6 +131,8 @@
 				<version>2.4</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<outputDirectory>${project.basedir}/target</outputDirectory>
+					<warName>sacheti.war</warName>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -144,22 +146,6 @@
 					<debug>true</debug>
 					<testCompilerArgument>-parameters</testCompilerArgument>
 				</configuration>
-				<executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals><goal>copy</goal></goals>
-                    <configuration>
-                        <artifactItems>
-                            <artifactItem>
-                                <groupId>br.edu.fema</groupId>
-                                <artifactId>sacheti</artifactId>
-                                <version>8.0.30.2</version>
-                                <destFileName>webapp-runner.jar</destFileName>
-                            </artifactItem>
-                        </artifactItems>
-                    </configuration>
-                </execution>
-            </executions>
 			</plugin>
 
 			<plugin>
